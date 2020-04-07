@@ -2,7 +2,7 @@
 
 <div align="center">
 <span style="display:inline-block;">
-<img src="https://user-images.githubusercontent.com/10532399/78620904-3844bd80-784f-11ea-80ec-4e8d9bd903ac.png" height="200">
+<img src="https://user-images.githubusercontent.com/10532399/78620904-3844bd80-784f-11ea-80ec-4e8d9bd903ac.png" height="500">
 </span>
 </div>
 
@@ -22,9 +22,9 @@ This music was generated entirely using code. It is available here, in this repo
 
 This repo contains the TidalCycles code used to generate the track, samples sourced from a bunch of youtube videos, and early demo versions.
 
-`demo` is self-explanatory
-`nation.tidal` is the code
-`nation`, `nation2` and `nation2full` contain samples for respective tracks
+- `demo` is self-explanatory
+- `nation.tidal` is the code
+- `nation`, `nation2` and `nation2full` contain samples for respective tracks
 
 
 Feel free to reuse this code, the samples, or remix the track.
