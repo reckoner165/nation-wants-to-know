@@ -1,58 +1,64 @@
+-- Nation Wants To Know - Reckoner
+-- This code contains the code to generate the entire track over time
+-- In order to run this code, you need to be setup with TidalCycles and Supercollider.
+
+-- This code is structured around Kindohm's interpretation of It's Gonna Rain by Steve Reich
 setcps (1)
 
-let 
+let
     part1PhaseRate = 1.0075
     part2PhaseRate = 1.0035
     part2DelayRate = 0.038
     part2Slow = 8.5
 
+-- Nation Wants To Know I
 
+-- intro
 asap $ s "nation:1"
 
--- part 1 main
+-- main loop
 d1 $ s "nation" # cut 1
 
--- part 1 first phase     
-do 
+-- broken phrases
+do
     resetCycles
-    d1 
+    d1
         $ s "nation*2"
         # begin (range 0 0.5 $ slow 50 saw)
         # cut 1
 
--- part 1 main (again)
+-- main loop
 d1 $ s "nation" # cut 1
 
--- part 1 second phase       
+-- stereo phasing
 do
     resetCycles
-    d1 $ superimpose ((slow part1PhaseRate) . (# cut 2) . (# pan 1)) 
-        $ s "nation" 
-        # cut 1 
+    d1 $ superimpose ((slow part1PhaseRate) . (# cut 2) . (# pan 1))
+        $ s "nation"
+        # cut 1
         # gain 0.925
         # pan 0
 
-
-
--- part 1 main (again)
+-- main loop / outro
 d1 $ s "nation" # cut 1
 
 hush
 
+
+-- Nation Wants To Know II
+
 -- part 2 intro
 asap $ s "nation2full"
 
-
-
--- part 2 singles
-do 
+-- broken phrases
+do
     resetCycles
-    d1 
+    d1
         $ slow part2Slow
-        $ stack [ 
+        $ stack [
           n 0
           , (0.1 ~>) $ n 1
-          , (0.2 ~>) $ n 2 
+          , (0.2 ~>) $ n 2
           , (0.25 ~>) $ n 3
           , (0.32 ~>) $ n 4
           , (0.47 ~>) $ n 5
@@ -60,19 +66,19 @@ do
           , (0.74 ~>) $ n 7
           , (0.83 ~>) $ n 8
           , (0.94 ~>) $ n 9
-        ] 
+        ]
         # s "nation2"
 
--- part 2 phase 1
-do 
+-- stereo phasing
+do
     -- resetCycles
-    d1 
-        $ slow part2Slow 
+    d1
+        $ slow part2Slow
         $ superimpose (slow part2PhaseRate . (# pan 1))
-        $ stack [ 
+        $ stack [
           n 0
           , (0.1 ~>) $ n 1
-          , (0.2 ~>) $ n 2 
+          , (0.2 ~>) $ n 2
           , (0.25 ~>) $ n 3
           , (0.32 ~>) $ n 4
           , (0.47 ~>) $ n 5
@@ -80,17 +86,21 @@ do
           , (0.74 ~>) $ n 7
           , (0.83 ~>) $ n 8
           , (0.94 ~>) $ n 9
-        ] 
+        ]
         # s "nation2" # gain 0.97 # pan 0
 
-d1 
-    $ slow part2Slow 
+-- stereo phasing with delay
+d1
+    $ slow part2Slow
     $ superimpose (slow part2PhaseRate . (# pan 1))
-    $ stutWith 15 part2DelayRate (|* gain 0.95)
-    $ stack [ 
+    -- Increase the stutWith value every few cycles until
+    -- all the delay tracks mix into a din.
+    -- Reckoner turned it all the way up to 15 in the released track
+    $ stutWith 3 part2DelayRate (|* gain 0.95)
+    $ stack [
         n 0
         , (0.1 ~>) $ n 1
-        , (0.2 ~>) $ n 2 
+        , (0.2 ~>) $ n 2
         , (0.25 ~>) $ n 3
         , (0.32 ~>) $ n 4
         , (0.47 ~>) $ n 5
@@ -98,7 +108,7 @@ d1
         , (0.74 ~>) $ n 7
         , (0.83 ~>) $ n 8
         , (0.94 ~>) $ n 9
-    ] 
+    ]
     # s "nation2" # gain 0.95 # pan 0
 
 hush
